@@ -1,0 +1,61 @@
+---
+title: "p8105_hw1_yy3307"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+### Problem 1
+
+```{r import dataset}
+data("penguins", package = "palmerpenguins")
+```
+
+```{r}
+bill_length_mean = mean(penguins$bill_length_mm, na.rm = TRUE)
+bill_depth_mean = mean(penguins$bill_depth_mm, na.rm = TRUE)
+mass_mean = mean(penguins$body_mass_g, na.rm = TRUE)
+```
+
+
+The "penguins" dataset contains various information about 344 penguins,
+which includes variables of **species, island, bill_length_mm, bill_depth_mm, 
+flipper_length_mm, body_mass_g, sex, and year**. In this dataset, total number
+of participants are 344 penguins. **"Species"** indicate the species of each 
+penguin. The penguins can be classiffied as _3_ species: _Adelie, Chinstrap, 
+and Gentoo_. **"Island"** indicate the place of origin of each 
+penguin. The **"Island"** variable also has three origins: _Torgersen, Biscoe, 
+and Dream_. **"bill_length_mm"** records the length of each penguin's bill, the 
+average bill length of sampled penguins is 
+`r round(bill_length_mean, digits = 2)`mm. **"bill_depth_mm"** holds the depth 
+of each penguin's bill, the mean bill depth of sampled penguins is 
+`r round(bill_depth_mean, digits = 2)`mm. **"body_mass_g"** indicates the weight
+of each penguin, the average weight of sampled penguins is 
+`r round(mass_mean, digits = 2)`g. Lastly, **"sex"** and **"year"** shows the 
+gender and record time of each penguin.
+
+The size of the dataset is 344 * 8, with 344 rows and 8 columns
+(nrow = 344, ncol = 8).
+
+```{r flipper mean}
+flipper_mean = mean(penguins$flipper_length_mm, na.rm = TRUE)
+```
+
+The mean flipper length = `r round(flipper_mean, digits = 2)`.
+
+```{r, warning = FALSE}
+plot_penguins = tibble(
+  x = penguins$bill_length_mm,
+  y = penguins$flipper_length_mm,
+)
+
+Species = penguins$species
+ggplot(plot_penguins, aes(x = x, y = y, color = Species)) + geom_point()
+
+ggsave("scatter_plot.pdf")
+```
+
+### Problem 2
+
