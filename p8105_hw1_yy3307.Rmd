@@ -7,18 +7,21 @@ output: github_document
 library(tidyverse)
 ```
 
-### Problem 1
+# Problem 1
 
+The first step is to load the penguins dataset:
 ```{r import dataset}
 data("penguins", package = "palmerpenguins")
 ```
 
-```{r}
+### Here is a brief description of the penguins dataset:
+
+This code chunk is used to conduct summaries(mean) of penguins dataset:
+```{r dataset summary}
 bill_length_mean = mean(penguins$bill_length_mm, na.rm = TRUE)
 bill_depth_mean = mean(penguins$bill_depth_mm, na.rm = TRUE)
 mass_mean = mean(penguins$body_mass_g, na.rm = TRUE)
 ```
-
 
 The "penguins" dataset contains various information about 344 penguins,
 which includes variables of **species, island, bill_length_mm, bill_depth_mm, 
@@ -29,23 +32,30 @@ and Gentoo_. **"Island"** indicate the place of origin of each
 penguin. The **"Island"** variable also has three origins: _Torgersen, Biscoe, 
 and Dream_. **"bill_length_mm"** records the length of each penguin's bill, the 
 average bill length of sampled penguins is 
-`r round(bill_length_mean, digits = 2)`mm. **"bill_depth_mm"** holds the depth 
+`r round(bill_length_mean, digits = 2)` mm. **"bill_depth_mm"** holds the depth 
 of each penguin's bill, the mean bill depth of sampled penguins is 
-`r round(bill_depth_mean, digits = 2)`mm. **"body_mass_g"** indicates the weight
+`r round(bill_depth_mean, digits = 2)` mm. **"body_mass_g"** indicates the weight
 of each penguin, the average weight of sampled penguins is 
-`r round(mass_mean, digits = 2)`g. Lastly, **"sex"** and **"year"** shows the 
+`r round(mass_mean, digits = 2)` g. Lastly, **"sex"** and **"year"** shows the 
 gender and record time of each penguin.
+
+### Here is the size of the dataset:
 
 The size of the dataset is 344 * 8, with 344 rows and 8 columns
 (nrow = 344, ncol = 8).
 
+### Here is the mean flipper length:
+
+Calculate average of flipper_length_mm column (NA skipped):
 ```{r flipper mean}
 flipper_mean = mean(penguins$flipper_length_mm, na.rm = TRUE)
 ```
 
-The mean flipper length = `r round(flipper_mean, digits = 2)`.
+The mean flipper length = `r round(flipper_mean, digits = 2)` mm.
 
-```{r, warning = FALSE}
+### Create a scatter plot with "flipper_length_mm" as y-axis and bill_length_mm as x-axis. Differentiate colors according to species. And use ggsave to export the scatter plot.
+
+```{r scatter_plot, warning = FALSE}
 plot_penguins = tibble(
   x = penguins$bill_length_mm,
   y = penguins$flipper_length_mm,
@@ -57,5 +67,5 @@ ggplot(plot_penguins, aes(x = x, y = y, color = Species)) + geom_point()
 ggsave("scatter_plot.pdf")
 ```
 
-### Problem 2
+# Problem 2
 
