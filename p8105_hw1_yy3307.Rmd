@@ -10,14 +10,14 @@ library(tidyverse)
 # Problem 1
 
 The first step is to load the penguins dataset:
-```{r import dataset}
+```{r import_dataset}
 data("penguins", package = "palmerpenguins")
 ```
 
-### Here is a brief description of the penguins dataset:
+### Brief description of the penguins dataset:
 
 This code chunk is used to conduct summaries(mean) of penguins dataset:
-```{r dataset summary}
+```{r dataset_summary}
 bill_length_mean = mean(penguins$bill_length_mm, na.rm = TRUE)
 bill_depth_mean = mean(penguins$bill_depth_mm, na.rm = TRUE)
 mass_mean = mean(penguins$body_mass_g, na.rm = TRUE)
@@ -34,26 +34,26 @@ and Dream_. **"bill_length_mm"** records the length of each penguin's bill, the
 average bill length of sampled penguins is 
 `r round(bill_length_mean, digits = 2)` mm. **"bill_depth_mm"** holds the depth 
 of each penguin's bill, the mean bill depth of sampled penguins is 
-`r round(bill_depth_mean, digits = 2)` mm. **"body_mass_g"** indicates the weight
-of each penguin, the average weight of sampled penguins is 
+`r round(bill_depth_mean, digits = 2)` mm. **"body_mass_g"** indicates the 
+weight of each penguin, the average weight of sampled penguins is 
 `r round(mass_mean, digits = 2)` g. Lastly, **"sex"** and **"year"** shows the 
 gender and record time of each penguin.
 
-### Here is the size of the dataset:
+### Size of the dataset:
 
 The size of the dataset is 344 * 8, with 344 rows and 8 columns
 (nrow = 344, ncol = 8).
 
-### Here is the mean flipper length:
+### Mean flipper length:
 
 Calculate average of flipper_length_mm column (NA skipped):
-```{r flipper mean}
+```{r flipper_mean}
 flipper_mean = mean(penguins$flipper_length_mm, na.rm = TRUE)
 ```
 
 The mean flipper length = `r round(flipper_mean, digits = 2)` mm.
 
-### Create a scatter plot with "flipper_length_mm" as y-axis and bill_length_mm as x-axis. Differentiate colors according to species. And use ggsave to export the scatter plot.
+### Create a scatter plot with condition and export it.
 
 ```{r scatter_plot, warning = FALSE}
 plot_penguins = tibble(
@@ -69,3 +69,44 @@ ggsave("scatter_plot.pdf")
 
 # Problem 2
 
+### Create date frame.
+
+Code chunk below is the dataframe setting:
+```{r df_setting}
+q2_df = tibble(
+  random_sample = rnorm(10),
+  vec_logic = random_sample > 0,
+  vec_char = c("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"),
+  vec_factor = factor(c("High", "Medium", "Low", "High", "Medium", "Low","High", "Medium", "Low","High"))
+)
+```
+
+Then, we will test if each variables in the dataframe has a mean value.
+```{r mean_df_var}
+mean(pull(q2_df, random_sample))
+mean(pull(q2_df, vec_logic))
+mean(pull(q2_df, vec_char))
+mean(pull(q2_df, vec_factor))
+```
+
+From the output we can analyse that we are able to calculate the mean value for 
+numeric variables "random_sample" and "vec_logic". However, we cannot find the 
+mean value for "vec_char" and "vec_factor" since they are not in numerical expression.
+So when I tried to find mean value for these two variables, I will receive _NA_
+as result.
+
+Next, I'm going to apply as.numeric function to logic, char, and factor variables.
+```{r convert, eval = FALSE}
+as.numeric(pull(q2_df, vec_logic))
+as.numeric(pull(q2_df, vec_char))
+as.numeric(pull(q2_df, vec_factor))
+```
+
+The output indicates that we can convert logic variables and factor variables
+into numerical expression, but we can't convert character vector as numeric.
+Logic variables will be transferred into 0 and 1 after convertion, and factor
+variables will be transferred into numbers starting from 1 according to their
+factor “levels” in alphabetical order.
+This result also shows that the output will fill up with _NA_ variables as place
+holders if the function cannot apply to the situation. That's the reason why I 
+received NA as the output of two mean values of non numeric vactors.
