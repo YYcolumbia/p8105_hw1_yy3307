@@ -62,7 +62,7 @@ plot_penguins = tibble(
 )
 
 Species = penguins$species
-ggplot(plot_penguins, aes(x = x, y = y, color = Species)) + geom_point()
+ggplot(plot_penguins, aes(x = x, y = y, color = Species)) + geom_point() + labs(title = "bill length v.s. flipper length", x = "bill length (mm)", y = "flipper length (mm)") + theme(plot.title = element_text(hjust = 0.5))
 
 ggsave("scatter_plot.pdf")
 ```
